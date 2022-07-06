@@ -4,8 +4,7 @@
       app
       color="darkgrey"
       dark
-      prominent
-      shrink-on-scroll
+      height="80"
     >
       <!-- <template v-slot:img="{ props }">
         <g-image
@@ -18,7 +17,6 @@
       <v-toolbar-title class="mx-2">E-Vents</v-toolbar-title>
       <v-spacer />
       <v-text-field
-        class="mt-2"
         clearable
         color="cyan"
         dense
@@ -42,24 +40,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container style="height: 2000px;">
-        <g-image 
-          alt="Arato Festival"
-          src="~/assets/images/arato-festival.jpg"
-          style="width: 300px; height; auto;"
-        />
-        <g-image 
-          alt="Navbar Background"
-          src="~/assets/images/navbar-background.jpg"
-          style="width: 300px; height; auto"
-        />
-        <v-img 
-          alt="Arato Festival"
-          src="~/assets/images/arato-festival.jpg"
-          style="width: 300px; height; auto;"
-        />
-        <slot/>
-      </v-container>
+      <slot />
     </v-main>
   </v-app>
 </template>
