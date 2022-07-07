@@ -13,29 +13,51 @@ module.exports = function (api) {
   });
 
   api.loadSource(async actions => {
-    const { data } = (await axios.get('http://localhost:1337/api/events?populate=image')).data;
-
-    const collection = actions.addCollection({
-      typeName: 'Event'
-    })
-
-    console.log('DATA: ', data);
-    console.log('IMAGE: ', data.image);
-    console.log('THUMBNAIL: ', data.thumbnail);
-
-    for (const event of data) {
-      collection.addNode({
-        id: event.id,
-        title: event.attributes.title,
-        description: event.attributes.description,
-        location: event.attributes.location,
-        date: event.attributes.date,
-        duration: event.attributes.duration,
-        price: event.attributes.price,
-        image: event.attributes.image.data.attributes.url,
-        thumbnail: event.attributes.image.data.attributes.formats.small.url,
+    async function getEvents() {
+      const { data } = (await axios.get('http://localhost:1337/api/events?populate=*')).data;
+  
+      const collection = actions.addCollection({
+        typeName: 'Event'
       })
-    };
+  
+      console.log('EVENT: ', data);
+  
+      for (const event of data) {
+        collection.addNode({
+          id: event.id,
+          title: event.attributes.title,
+          description: event.attributes.description,
+          location: event.attributes.location,
+          date: event.attributes.date,
+          duration: event.attributes.duration,
+          price: event.attributes.price,
+          image: event.attributes.image.data.attributes.url,
+          thumbnail: event.attributes.image.data.attributes.formats.small.url,
+          categories: event.attributes.categories.data,
+        })
+      };
+    }
+
+    async function getCategories() {
+      const { data } = (await axios.get('http://localhost:1337/api/categories')).data;
+  
+      const collection = actions.addCollection({
+        typeName: 'Category'
+      })
+  
+      console.log('CATEGORY: ', data);
+  
+      for (const category of data) {
+        collection.addNode({
+          id: category.id,
+          name: category.attributes.name,
+        })
+      };
+    }
+
+    await getEvents();
+    await getCategories();
+
   });
 
   api.createPages(({ createPage }) => {
