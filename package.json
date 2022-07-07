@@ -2,11 +2,13 @@
   "name": "e-vents-client",
   "private": true,
   "scripts": {
+    "reboot": "gridsome build && gridsome develop",
     "build": "gridsome build",
     "develop": "gridsome develop",
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "gridsome": "^0.7.0",
     "vuetify": "^2.6.7"
   },

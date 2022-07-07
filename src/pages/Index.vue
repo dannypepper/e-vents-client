@@ -19,27 +19,30 @@
             <v-tab
               v-for="i in 3"
               :key="i"
-              :href="'#tab-' + i"
+              :href="'#' + i"
             >
               Item {{ i }}
             </v-tab>
           </v-tabs>
-          <v-card class="mx-auto" max-width="400">
-            <v-img
+          <v-card
+            v-for="edge in $page.events.edges"
+            :key="edge.node.id"
+            class="mx-auto mt-4 mb-6"
+            max-width="420"
+          >
+            <g-image
               class="white--text align-end"
-              height="200px"
-              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+              :src="`http://localhost:1337${edge.node.thumbnail}`"
+              widtH="420"
             >
-              <v-card-title>Top 10 Australian beaches</v-card-title>
-            </v-img>
-
+              <v-card-title>{{ edge.node.title }}</v-card-title>
+            </g-image>
             <v-card-subtitle class="pb-0">
-              Number 10
+              {{ edge.node.date }}
             </v-card-subtitle>
 
             <v-card-text class="text--primary">
-              <div>Whitehaven Beach</div>
-              <div>Whitsunday Island, Whitsunday Islands</div>
+              {{ edge.node.description }}
             </v-card-text>
 
             <v-card-actions>
@@ -71,6 +74,25 @@
   </Layout>
 </template>
 
+<page-query>
+query {
+  events: allEvent {
+    edges {
+      node {
+        id,
+        title,
+        description,
+        price,
+        duration,
+        date,
+        image,
+        thumbnail,
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
 export default {
   name: 'Index',
@@ -81,6 +103,23 @@ export default {
     tab: 0,
     show: false,
   }),
+  watch: {
+    tab(value) {
+      if (this.tab === 0) {
+        this.showAllEvents();
+      } else {
+        this.showEventsByType();
+      }
+    }
+  },
+  methods: {
+    showAllEvents() {
+
+    },
+    showEventsByType() {
+
+    },
+  },
 }
 </script>
 
