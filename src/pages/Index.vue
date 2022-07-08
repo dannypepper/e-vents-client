@@ -143,17 +143,31 @@ export default {
       this.events = this.$page.events.edges;
     },
     showEventsByType(value) {
-      this.events = this.$page.events.edges.filter((event) => {
-        return event.node.categories.filter((category) => {
-          console.log("tab ID:", value)
 
-          console.log("category ID:", category.id)
+      // this.$page.events.edges.map((event) => {
+      //   const eventCategoryIds = [];
+      //   event.node.categories.map((category) => {
+      //     console.log('ID: ', category.id);
+      //     if (!eventCategoryIds.includes(category.id)) {
+      //       eventCategoryIds.push(category.id);
+      //     }
+      //   })
+      //   console.log('eCIDS: ', eventCategoryIds);
+      //   console.log('INCLUDES: ', eventCategoryIds.includes(value));
 
-          console.log("BOOLEAN :", category.id === value)
+      //   const categoryEvents = [];
+      //   this.$page.events.edges.filter(() => {
+      //     if (eventCategoryIds.includes(value)) {
+      //       console.log('event:', event);
+      //       categoryEvents.push(event.node.id);
+      //       console.log('categoryEvents', categoryEvents)
+      //     }
+      //   })
 
-          return category.id === value;
-        })
-      });
+      //   this.events = categoryEvents;
+      //   console.log('thisevents: ', this.events);
+      //   console.log('\n \n ');
+      
     },
   },
 }
