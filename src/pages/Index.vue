@@ -29,48 +29,59 @@
               <v-card
                 v-for="event in events"
                 :key="event.node.id"
-                class="mt-6 mb-4 ml-4 mr-4"
-                width="300"
+                class="mt-6 mb-4 ml-2 mr-2 rounded-t-xl"
+                max-height="720"
+                width="330"
+                dark
+                elevation="4"
+                
+                tile
               >
                 <v-img
-                  class="white--text align-end"
                   :src="`http://localhost:1337${event.node.thumbnail}`"
-                  width="300"
+                  width="330"
                 >
-                  <v-card-title>{{ event.node.title }}</v-card-title>
                 </v-img>
-                <v-card-subtitle class="pb-0">{{ event.node.date }}</v-card-subtitle>
+                <v-card-title class="font-weight-bold text-uppercase">{{ event.node.title }}</v-card-title>
+                <v-card-subtitle >{{ event.node.date }}</v-card-subtitle>
     
-                <v-card-text class="text--primary">
+                <v-card-text style="font-size: 1rem;">
                   {{ event.node.description }}
-                  <pre>
-                    {{ event.node.categories }}
-                  </pre>
-
                 </v-card-text>
-    
+
                 <v-card-actions>
-                  <v-btn color="orange" text>Share</v-btn>
-                  <v-btn color="orange" text>Explore</v-btn>
-                  <v-spacer />
                   <v-btn
-                    icon
+                    text
+                    color="teal accent-4"
                     @click="show = !show"
                   >
-                    <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    Learn More
                   </v-btn>
                 </v-card-actions>
-    
+
                 <v-expand-transition>
-                  <div v-show="show">
-                    <v-divider></v-divider>
-    
-                    <v-card-text>
-                      I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
+                  <v-card
+                    v-if="show"
+                    class="transition-fast-in-fast-out v-card--show"
+                    style="height: 100%;"
+                  >
+                    <v-card-text class="pb-0">
+                      <p class="text-h4 ">
+                        Origin
+                      </p>
+                      <p>late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’ </p>
                     </v-card-text>
-                  </div>
+                    <v-card-actions class="pt-0">
+                      <v-btn
+                        text
+                        color="teal accent-4"
+                        @click="show = !show"
+                      >
+                        Close
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
                 </v-expand-transition>
-    
               </v-card>
             </v-col>
           </v-row>
@@ -134,7 +145,7 @@ export default {
       if (this.tab === 0) {
         this.showAllEvents();
       } else {
-        this.showEventsByType(value);
+        this.showEventsByCategory(value);
       }
     }
   },
@@ -142,7 +153,7 @@ export default {
     showAllEvents() {
       this.events = this.$page.events.edges;
     },
-    showEventsByType(value) {
+    showEventsByCategory(value) {
 
       // this.$page.events.edges.map((event) => {
       //   const eventCategoryIds = [];
@@ -179,5 +190,10 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+.v-card--reveal {
+  top: 0;
+  position: absolute;
+  width: 100%;
 }
 </style>
