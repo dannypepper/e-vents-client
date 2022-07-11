@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "gridsome": "^0.7.0",
+    "moment": "^2.29.4",
     "vuetify": "^2.6.7"
   },
   "devDependencies": {

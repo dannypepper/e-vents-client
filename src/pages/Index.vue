@@ -29,59 +29,31 @@
               <v-card
                 v-for="event in events"
                 :key="event.node.id"
-                class="mt-6 mb-4 ml-2 mr-2 rounded-t-xl"
-                max-height="720"
-                width="330"
+                class="mt-6 mb-4 ml-2 mr-2 rounded pt-2 pr-2 pb-2 pl-2"
+                width="345"
+                height="616"
                 dark
                 elevation="4"
-                
                 tile
               >
                 <v-img
                   :src="`http://localhost:1337${event.node.thumbnail}`"
-                  width="330"
+                  width="345"
+                  height="195"
+                  class="rounded-0"
                 >
                 </v-img>
-                <v-card-title class="font-weight-bold text-uppercase">{{ event.node.title }}</v-card-title>
-                <v-card-subtitle >{{ event.node.date }}</v-card-subtitle>
+                <v-card-title 
+                  class="font-weight-bold text-uppercase"
+                  style="padding: 16px 8px; letter-spacing: 0.0420em;"
+                >
+                  {{ event.node.title }}
+                </v-card-title>
+                <v-card-subtitle class="pl-2">{{ formatDate(event.node.date) }}</v-card-subtitle>
     
-                <v-card-text style="font-size: 1rem;">
+                <v-card-text style="font-size: 1rem; padding-left: 8px">
                   {{ event.node.description }}
                 </v-card-text>
-
-                <v-card-actions>
-                  <v-btn
-                    text
-                    color="teal accent-4"
-                    @click="show = !show"
-                  >
-                    Learn More
-                  </v-btn>
-                </v-card-actions>
-
-                <v-expand-transition>
-                  <v-card
-                    v-if="show"
-                    class="transition-fast-in-fast-out v-card--show"
-                    style="height: 100%;"
-                  >
-                    <v-card-text class="pb-0">
-                      <p class="text-h4 ">
-                        Origin
-                      </p>
-                      <p>late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’, from Greek eleēmosunē ‘compassion’ </p>
-                    </v-card-text>
-                    <v-card-actions class="pt-0">
-                      <v-btn
-                        text
-                        color="teal accent-4"
-                        @click="show = !show"
-                      >
-                        Close
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-expand-transition>
               </v-card>
             </v-col>
           </v-row>
@@ -93,7 +65,7 @@
 
 <page-query>
 query {
-  events: allEvent {
+  events: allEvent(sortBy: "date", order: DESC) {
     edges {
       node {
         id,
@@ -113,7 +85,7 @@ query {
       }
     }
   }
-  categories: allCategory {
+  categories: allCategory(sortBy: "name", order: ASC) {
     edges {
       node {
         id, 
@@ -125,6 +97,8 @@ query {
 </page-query>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'Index',
   metaInfo: {
@@ -133,19 +107,22 @@ export default {
   mounted() {
     this.categories = this.$page.categories.edges;
     this.events = this.$page.events.edges;
+    this.eventsByCategory = this.$page.categories.edges.map((category) => parseInt(category.node.id));
+    this.eventsByCategory.unshift(0);
   },
   data: () => ({
     categories: [],
     events: [],
     tab: 0,
     show: false,
+    eventsByCategory: [],
   }),
   watch: {
     tab(value) {
       if (this.tab === 0) {
         this.showAllEvents();
       } else {
-        this.showEventsByCategory(value);
+        this.showEventsByCategory(this.eventsByCategory[value]);
       }
     }
   },
@@ -154,32 +131,16 @@ export default {
       this.events = this.$page.events.edges;
     },
     showEventsByCategory(value) {
-
-      // this.$page.events.edges.map((event) => {
-      //   const eventCategoryIds = [];
-      //   event.node.categories.map((category) => {
-      //     console.log('ID: ', category.id);
-      //     if (!eventCategoryIds.includes(category.id)) {
-      //       eventCategoryIds.push(category.id);
-      //     }
-      //   })
-      //   console.log('eCIDS: ', eventCategoryIds);
-      //   console.log('INCLUDES: ', eventCategoryIds.includes(value));
-
-      //   const categoryEvents = [];
-      //   this.$page.events.edges.filter(() => {
-      //     if (eventCategoryIds.includes(value)) {
-      //       console.log('event:', event);
-      //       categoryEvents.push(event.node.id);
-      //       console.log('categoryEvents', categoryEvents)
-      //     }
-      //   })
-
-      //   this.events = categoryEvents;
-      //   console.log('thisevents: ', this.events);
-      //   console.log('\n \n ');
-      
+      this.events = this.$page.events.edges.filter((event) => {
+        const eventInCategory = event.node.categories.map((category) => {
+          return category.id === value;
+        })
+        return eventInCategory.includes(true);
+      })
     },
+    formatDate(date) {
+      return moment(date).format('YYYY MMMM Do, H:mm');
+    }
   },
 }
 </script>
@@ -192,7 +153,8 @@ export default {
   justify-content: space-evenly;
 }
 .v-card--reveal {
-  top: 0;
+  bottom: 0;
+  opacity: 1 !important;
   position: absolute;
   width: 100%;
 }
