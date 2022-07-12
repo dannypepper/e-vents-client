@@ -14,7 +14,9 @@
         ></g-image>
       </template> -->
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <v-toolbar-title class="mx-2">E-Vents</v-toolbar-title>
+      <router-link style="color: white; text-decoration: none;" to="/">
+        <v-toolbar-title class="mx-2" >{{ $static.metadata.siteName }}</v-toolbar-title>
+      </router-link>
       <v-spacer />
       <v-text-field
         clearable
@@ -40,7 +42,13 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <slot />
+      <v-container>
+        <v-row>
+          <v-col class="mt-3">
+            <slot />
+          </v-col> 
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>

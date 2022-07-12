@@ -17,7 +17,8 @@ module.exports = function (api) {
       const { data } = (await axios.get('http://localhost:1337/api/events?populate=*')).data;
   
       const collection = actions.addCollection({
-        typeName: 'Event'
+        typeName: 'Event',
+        path: '/events/:id'
       })
   
       console.log('EVENT: ', data);
@@ -25,6 +26,7 @@ module.exports = function (api) {
       for (const event of data) {
         collection.addNode({
           id: event.id,
+          path: `/events/${event.id}`,
           title: event.attributes.title,
           description: event.attributes.description,
           location: event.attributes.location,
