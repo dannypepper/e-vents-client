@@ -1,20 +1,20 @@
 <template>
   <Layout>
-    <v-row>
-      <v-col cols="12">
-        <v-img
-          :src="`http://localhost:1337${$page.event.image}`"
-          max-width="690"
-          max-height="390"
-          class="rounded-0"
-        />
-        <h1>{{ $page.event.title }}</h1>
-        <p>Date: {{ formatDate($page.event.date) }}</p>
-        <p>Entry: {{ formatPrice($page.event.price) }}</p>
-        <p>Duration: {{ $page.event.duration }} óra</p>
-        <p>{{ $page.event.description }}</p>
-      </v-col>
-    </v-row>
+      <v-row>
+        <v-col 
+          cols="12"
+        >
+          <v-img
+            :src="`http://localhost:1337${$page.event.image}`"
+            class="rounded-0"
+          />
+          <h1>{{ $page.event.title }}</h1>
+          <p>Date: {{ formatDate($page.event.date) }}</p>
+          <p>Entry: {{ formatPrice($page.event.price) }}</p>
+          <p>Duration: {{ $page.event.duration }} óra</p>
+          <p>{{ $page.event.description }}</p>
+        </v-col>
+      </v-row>
   </Layout>
 </template>
 
@@ -57,8 +57,14 @@ export default {
 
 <style scoped>
 h1 {
-  text-align: center;
+  font-size: 2.5rem;
+  font-style: oblique;
   line-height: normal;
-  margin: 16px 0;
+  margin: 16px 0 24px 0;
+  text-align: center;
+}
+p {
+  font-size: 1.25rem;
+  text-align: center;
 }
 </style>>
