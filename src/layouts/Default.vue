@@ -4,8 +4,28 @@
       app
       color="darkgrey"
       dark
-      height="80"
+      prominent
+      shrink-on-scroll
+      scroll-threshold="70"
+      outlined
+      height="210"
+      :src="`http://localhost:1337${$static.appBarBackgroundImages.url}`"
+
     >
+      <template v-slot:img="{ props }">
+        <!-- <g-image
+          v-bind="props"
+          width="360"
+          height="120"
+          src="~/assets/images/app-bar-background-1.jpg"
+        ></g-image> -->
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+        ></v-img>
+      </template>
+
+
       <!-- <template v-slot:img="{ props }">
         <g-image
           v-bind="props"
@@ -14,11 +34,19 @@
         ></g-image>
       </template> -->
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <router-link style="color: white; text-decoration: none;" to="/">
-        <v-toolbar-title class="mx-2" >{{ $static.metadata.siteName }}</v-toolbar-title>
+      <router-link 
+        to="/"
+        style="color: white; text-decoration: none; font-size: 1.5rem;" 
+      >
+        <v-toolbar-title 
+          class="mx-2 pt-2 pb-2"
+        >
+          {{ $static.metadata.siteName }}
+        </v-toolbar-title>
       </router-link>
       <v-spacer />
       <v-text-field
+        class="mt-1"
         clearable
         color="cyan"
         dense
@@ -55,9 +83,24 @@
 
 <static-query>
 query {
+  appBarBackgroundImages: appBarBackgroundImage(id: 3) {
+    id,
+    url,
+  }
   metadata {
     siteName,
     siteDescription
   }
 }
 </static-query>
+
+<script>
+export default {
+  mounted() {
+    this.appBarBackgroundImages = this.$static.appBarBackgroundImages.edges;
+  },
+  data: () => ({
+    appBarBackgroundImages: [],
+  }),
+}
+</script>

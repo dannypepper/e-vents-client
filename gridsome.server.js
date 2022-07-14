@@ -13,6 +13,24 @@ module.exports = function (api) {
   });
 
   api.loadSource(async actions => {
+    async function getAppBarBackgroundImages() {
+      const { data } = (await axios.get('http://localhost:1337/api/app-bar-background-images?populate=*')).data;
+
+      const collection = actions.addCollection({
+        typeName: 'AppBarBackgroundImage'
+      })
+
+      console.log('APPBARBACKGROUNDIMAGE: ', data);
+
+      for (const appBarBackgroundImage of data) {
+        collection.addNode({
+          id: appBarBackgroundImage.id,
+          url: appBarBackgroundImage.attributes.image.data.attributes.url,
+          largeImage: appBarBackgroundImage.attributes.image.data.attributes.formats.large.url,
+        })
+      }
+    }
+
     async function getEvents() {
       const { data } = (await axios.get('http://localhost:1337/api/events?populate=*')).data;
   
@@ -57,6 +75,7 @@ module.exports = function (api) {
       };
     }
 
+    await getAppBarBackgroundImages();
     await getEvents();
     await getCategories();
 
