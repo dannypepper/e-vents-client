@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout v-slot="{ searchText }">
     <v-row>
       <v-col>
         <v-tabs
@@ -28,7 +28,7 @@
     <v-row class="mt-0">
       <v-col cols="12" class="card-container">
         <v-card
-          v-for="event in events"
+          v-for="event in getEvents(searchText)"
           :key="event.node.id"
           class="mt-4 mb-4 ml-2 mr-2 rounded pt-2 pr-2 pb-2 pl-2"
           width="345"
@@ -139,7 +139,15 @@ export default {
     },
     formatDate(date) {
       return moment(date).format('YYYY MMMM Do, H:mm');
-    }
+    },
+    getEvents(searchText) {
+      if (searchText) {
+        return this.events.filter((event) => {
+          return event.node.title.toLowerCase().includes(searchText.toLowerCase());
+        })
+      }
+      return this.events;
+    },
   },
 }
 </script>

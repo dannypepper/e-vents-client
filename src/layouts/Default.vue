@@ -46,6 +46,8 @@
       </router-link>
       <v-spacer />
       <v-text-field
+        v-model="searchText"
+        @click:clear="searchText = null"
         class="mt-1"
         clearable
         color="cyan"
@@ -73,7 +75,7 @@
       <v-container>
         <v-row>
           <v-col class="mt-3">
-            <slot />
+            <slot :searchText="searchText"/>
           </v-col> 
         </v-row>
       </v-container>
@@ -101,6 +103,7 @@ export default {
   },
   data: () => ({
     appBarBackgroundImages: [],
+    searchText: '',
   }),
 }
 </script>
