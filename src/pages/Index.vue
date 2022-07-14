@@ -26,7 +26,7 @@
       </v-col>
     </v-row>
     <v-row class="mt-0">
-      <v-col col="12" class="card-container">
+      <v-col cols="12" class="card-container">
         <v-card
           v-for="event in events"
           :key="event.node.id"
