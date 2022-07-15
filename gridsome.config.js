@@ -8,5 +8,5 @@ module.exports = {
   siteName: 'E-Vents',
   siteDescription: 'Create or search events around the world',
   siteUrl: 'https://e-vents.io',
-  plugins: []
-}
+  plugins: [],
+};

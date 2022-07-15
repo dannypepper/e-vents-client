@@ -25,7 +25,6 @@
         ></v-img>
       </template>
 
-
       <!-- <template v-slot:img="{ props }">
         <g-image
           v-bind="props"
@@ -34,11 +33,11 @@
         ></g-image>
       </template> -->
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <router-link 
+      <router-link
         to="/"
         style="color: white; text-decoration: none; font-size: 1.5rem;" 
       >
-        <v-toolbar-title 
+        <v-toolbar-title
           class="mx-2 pt-2 pb-2"
         >
           {{ $static.metadata.siteName }}
@@ -76,7 +75,7 @@
         <v-row>
           <v-col class="mt-3">
             <slot :searchText="searchText"/>
-          </v-col> 
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
@@ -105,5 +104,5 @@ export default {
     appBarBackgroundImages: [],
     searchText: '',
   }),
-}
+};
 </script>

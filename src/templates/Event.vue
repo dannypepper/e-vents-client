@@ -1,7 +1,7 @@
 <template>
   <Layout>
       <v-row>
-        <v-col 
+        <v-col
           cols="12"
         >
           <v-img
@@ -39,20 +39,20 @@ export default {
   metaInfo() {
     return {
       title: this.$page.event.title,
-    }
+    };
   },
   methods: {
     formatPrice(price) {
       if (price === 0) {
         return 'FREE';
-        }
-      return `${this.$page.event.price} HUF`; 
+      }
+      return `${this.$page.event.price} HUF`;
     },
     formatDate(date) {
       return moment(date).format('YYYY MMMM Do, H:mm');
-    }
+    },
   },
-}
+};
 </script>
 
 <style scoped>

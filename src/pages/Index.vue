@@ -76,7 +76,7 @@ query {
         image,
         thumbnail,
         categories {
-          id, 
+          id,
           attributes {
             name,
           }
@@ -87,7 +87,7 @@ query {
   categories: allCategory(sortBy: "name", order: ASC) {
     edges {
       node {
-        id, 
+        id,
         name,
       }
     }
@@ -99,14 +99,16 @@ query {
 import moment from 'moment';
 
 export default {
-  name: 'Index',
+  name: 'IndexPage',
   metaInfo: {
-    title: 'Index Page'
+    title: 'Index Page',
   },
   mounted() {
     this.categories = this.$page.categories.edges;
     this.events = this.$page.events.edges;
-    this.eventsByCategory = this.$page.categories.edges.map((category) => parseInt(category.node.id));
+    this.eventsByCategory = this.$page.categories.edges.map(
+      (category) => parseInt(category.node.id, 10),
+    );
     this.eventsByCategory.unshift(0);
   },
   data: () => ({
@@ -123,7 +125,7 @@ export default {
       } else {
         this.showEventsByCategory(this.eventsByCategory[value]);
       }
-    }
+    },
   },
   methods: {
     showAllEvents() {
@@ -131,11 +133,11 @@ export default {
     },
     showEventsByCategory(value) {
       this.events = this.$page.events.edges.filter((event) => {
-        const eventInCategory = event.node.categories.map((category) => {
-          return category.id === value;
-        })
+        const eventInCategory = event.node.categories.map(
+          (category) => category.id === value,
+        );
         return eventInCategory.includes(true);
-      })
+      });
     },
     formatDate(date) {
       return moment(date).format('YYYY MMMM Do, H:mm');
@@ -143,13 +145,14 @@ export default {
     getEvents(searchText) {
       if (searchText) {
         return this.events.filter((event) => {
-          return event.node.title.toLowerCase().includes(searchText.toLowerCase());
-        })
+          const isTextInTitle = event.node.title.toLowerCase().includes(searchText.toLowerCase());
+          return isTextInTitle;
+        });
       }
       return this.events;
     },
   },
-}
+};
 </script>
 
 <style>
