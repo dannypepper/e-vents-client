@@ -66,6 +66,7 @@
       <v-btn
         class="ma-2"
         color="green"
+        @click="$router.push('/create')"
       >
         Create event
       </v-btn>

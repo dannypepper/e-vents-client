@@ -77,7 +77,10 @@ module.exports = function (api) {
     await getCategories();
   });
 
-  api.createPages(() => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+  api.createPages(({ createPage }) => {
+    createPage({
+      path: '/create',
+      component: './src/templates/CreateEvent.vue',
+    });
   });
 };
