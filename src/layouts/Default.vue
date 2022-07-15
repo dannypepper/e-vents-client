@@ -35,7 +35,7 @@
       <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
       <router-link
         to="/"
-        style="color: white; text-decoration: none; font-size: 1.5rem;" 
+        style="color: white; text-decoration: none; font-size: 1.5rem;"
       >
         <v-toolbar-title
           class="mx-2 pt-2 pb-2"
