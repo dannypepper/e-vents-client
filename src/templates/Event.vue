@@ -10,9 +10,10 @@
           />
           <h1>{{ $page.event.title }}</h1>
           <p>Date: {{ formatDate($page.event.date) }}</p>
+          <p>Location: {{ $page.event.location }}</p>
           <p>Entry: {{ formatPrice($page.event.price) }}</p>
           <p>Duration: {{ $page.event.duration }} óra</p>
-          <p>{{ $page.event.description }}</p>
+          <p>Descripton: {{ $page.event.description }}</p>
         </v-col>
       </v-row>
   </Layout>
@@ -22,12 +23,13 @@
   query($id: ID!) {
     event(id: $id) {
       id,
-      title,
-      description,
-      price,
-      duration,
       date,
+      description,
+      duration,
       image,
+      location,
+      price,
+      title,
     }
   }
 </page-query>
